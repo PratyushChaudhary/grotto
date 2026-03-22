@@ -1,0 +1,40 @@
+{
+  "name": "grotto-editor",
+  "version": "0.0.0",
+  "description": "A modern terminal-based code editor",
+  "keywords": [
+    "editor",
+    "terminal",
+    "cli",
+    "code-editor",
+    "tui"
+  ],
+  "homepage": "https://github.com/owomeister/grotto",
+  "bugs": {
+    "url": "https://github.com/owomeister/grotto/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owomeister/grotto.git"
+  },
+  "license": "GPL-3.0",
+  "author": "owomeister",
+  "bin": {
+    "grotto": "bin/grotto"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=14"
+  }
+}

@@ -21,11 +21,11 @@ const (
 type Layout int
 
 const (
-	LayoutSingle Layout = iota
-	LayoutColumns       // 2 side by side
-	LayoutRows          // 2 stacked
-	LayoutLeftRight2    // 1 left, 2 right stacked
-	LayoutGrid          // 2x2
+	LayoutSingle     Layout = iota
+	LayoutColumns           // 2 side by side
+	LayoutRows              // 2 stacked
+	LayoutLeftRight2        // 1 left, 2 right stacked
+	LayoutGrid              // 2x2
 )
 
 var (

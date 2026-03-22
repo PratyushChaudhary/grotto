@@ -31,9 +31,9 @@ type SearchOverlay struct {
 	cursor  int // cursor position within query input
 	editing int // 0 = query field, 1 = replace field
 
-	matches    []Match
-	matchIdx   int
-	caseSense  bool
+	matches   []Match
+	matchIdx  int
+	caseSense bool
 }
 
 var (
@@ -54,7 +54,7 @@ var (
 	labelStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#6272A4"))
 )
 
-func (s *SearchOverlay) Active() bool { return s.mode != SearchNone }
+func (s *SearchOverlay) Active() bool     { return s.mode != SearchNone }
 func (s *SearchOverlay) Mode() SearchMode { return s.mode }
 
 func (s *SearchOverlay) Open(mode SearchMode) {

@@ -12,9 +12,9 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	zone "github.com/lrstanley/bubblezone/v2"
 	"github.com/ActiveState/vt10x"
 	pty "github.com/creack/pty/v2"
+	zone "github.com/lrstanley/bubblezone/v2"
 )
 
 // TickMsg is the render tick, prefix-scoped.
@@ -55,8 +55,8 @@ type Model struct {
 	scrollY int // lines into history (0 = live)
 }
 
-func New() Model   { return Model{prefix: "term"} }
-func NewAI() Model { return Model{prefix: "ai"} }
+func New() Model              { return Model{prefix: "term"} }
+func NewAI() Model            { return Model{prefix: "ai"} }
 func (m Model) Init() tea.Cmd { return nil }
 
 func (m Model) termH() int {
@@ -84,9 +84,9 @@ func (m *Model) closeTerm(i int) {
 	m.scrollY = 0
 }
 
-func (m Model) TabCount() int                          { return len(m.tabs) }
-func (m *Model) AddTerm() tea.Cmd                      { return m.addTermCmd("", "") }
-func (m *Model) AddTermWithCmd(n, c string) tea.Cmd     { return m.addTermCmd(n, c) }
+func (m Model) TabCount() int                       { return len(m.tabs) }
+func (m *Model) AddTerm() tea.Cmd                   { return m.addTermCmd("", "") }
+func (m *Model) AddTermWithCmd(n, c string) tea.Cmd { return m.addTermCmd(n, c) }
 
 func (m *Model) addTermCmd(name, command string) tea.Cmd {
 	if m.width <= 0 || m.termH() <= 0 {
