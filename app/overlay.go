@@ -21,10 +21,10 @@ const (
 
 // Overlay handles Ctrl+P file finder and Ctrl+Shift+P command palette.
 type Overlay struct {
-	mode    OverlayMode
-	query   string
-	cursor  int // cursor in query
-	items   []string
+	mode     OverlayMode
+	query    string
+	cursor   int // cursor in query
+	items    []string
 	filtered []string
 	selected int
 }
@@ -36,20 +36,20 @@ type Command struct {
 
 var (
 	overlayBoxStyle = lipgloss.NewStyle().
-		Background(lipgloss.Color("#282A36")).
-		Foreground(lipgloss.Color("#F8F8F2")).
-		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("#7D56F4")).
-		Padding(0, 1)
+			Background(lipgloss.Color("#282A36")).
+			Foreground(lipgloss.Color("#F8F8F2")).
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(lipgloss.Color("#7D56F4")).
+			Padding(0, 1)
 	overlayInputStyle = lipgloss.NewStyle().
-		Background(lipgloss.Color("#44475A")).
-		Foreground(lipgloss.Color("#F8F8F2")).
-		Padding(0, 1)
+				Background(lipgloss.Color("#44475A")).
+				Foreground(lipgloss.Color("#F8F8F2")).
+				Padding(0, 1)
 	overlayItemStyle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#AAAAAA"))
+				Foreground(lipgloss.Color("#AAAAAA"))
 	overlaySelectedStyle = lipgloss.NewStyle().
-		Background(lipgloss.Color("#44475A")).
-		Foreground(lipgloss.Color("#F8F8F2"))
+				Background(lipgloss.Color("#44475A")).
+				Foreground(lipgloss.Color("#F8F8F2"))
 )
 
 func (o *Overlay) Active() bool { return o.mode != OverlayNone }

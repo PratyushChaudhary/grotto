@@ -35,13 +35,13 @@ type FlatNode struct {
 
 // Model is the sidebar file tree component.
 type Model struct {
-	root       TreeNode
-	flat       []FlatNode
-	cursor     int
-	scroll     int
-	width      int
-	height     int
-	ignores    []string
+	root          TreeNode
+	flat          []FlatNode
+	cursor        int
+	scroll        int
+	width         int
+	height        int
+	ignores       []string
 	selectedStyle lipgloss.Style
 }
 
