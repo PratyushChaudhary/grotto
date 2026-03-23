@@ -21,13 +21,13 @@ A terminal-native TUI code editor built with Go and Bubble Tea v2.
 ## Install
 
 ```sh
-go install github.com/owomeister/grotto@latest
+go install github.com/nishchaysinha/grotto@latest
 ```
 
 Or build from source:
 
 ```sh
-git clone https://github.com/owomeister/grotto
+git clone https://github.com/nishchaysinha/grotto
 cd grotto
 go build -o grotto .
 ```
@@ -87,4 +87,4 @@ app.Model (root)
 
 ## License
 
-MIT
+GPL-3.0
