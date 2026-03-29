@@ -61,18 +61,3 @@ release:
   prerelease: auto
   draft: false
   name_template: "v{{.Version}}"
-
-brews:
-  - name: grotto
-    repository:
-      owner: nishchaysinha
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    directory: Formula
-    homepage: "https://github.com/nishchaysinha/grotto"
-    description: "A modern terminal-based code editor"
-    license: "GPL-3.0"
-    install: |
-      bin.install "grotto"
-    test: |
-      system "#{bin}/grotto", "--version"

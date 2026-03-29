@@ -1,0 +1,70 @@
+name: Auto Tag
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    name: Auto Tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: latest_tag
+        run: |
+          tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Determine version bump
+        id: bump
+        run: |
+          latest="${{ steps.latest_tag.outputs.tag }}"
+          # Get commits since last tag
+          commits=$(git log "$latest"..HEAD --pretty=format:"%s" 2>/dev/null || git log --pretty=format:"%s")
+
+          # Check for breaking changes (major), features (minor), default to patch
+          bump="patch"
+          while IFS= read -r msg; do
+            if echo "$msg" | grep -qiE '^[a-z]+(\(.+\))?!:'; then
+              bump="major"
+              break
+            elif echo "$msg" | grep -qiE '^feat(\(.+\))?:'; then
+              if [ "$bump" != "major" ]; then
+                bump="minor"
+              fi
+            fi
+          done <<< "$commits"
+
+          echo "bump=$bump" >> "$GITHUB_OUTPUT"
+
+      - name: Calculate new tag
+        id: new_tag
+        run: |
+          latest="${{ steps.latest_tag.outputs.tag }}"
+          bump="${{ steps.bump.outputs.bump }}"
+
+          # Strip v prefix and split
+          version="${latest#v}"
+          IFS='.' read -r major minor patch <<< "$version"
+
+          case "$bump" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+          esac
+
+          new_tag="v${major}.${minor}.${patch}"
+          echo "tag=$new_tag" >> "$GITHUB_OUTPUT"
+          echo "Bumping $latest -> $new_tag ($bump)"
+
+      - name: Push tag
+        run: |
+          git tag "${{ steps.new_tag.outputs.tag }}"
+          git push origin "${{ steps.new_tag.outputs.tag }}"
