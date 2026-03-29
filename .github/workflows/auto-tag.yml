@@ -1,4 +1,4 @@
-name: Auto Tag
+name: Auto Tag & Release
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   tag:
-    name: Auto Tag
+    name: Tag & Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -68,3 +68,17 @@ jobs:
         run: |
           git tag "${{ steps.new_tag.outputs.tag }}"
           git push origin "${{ steps.new_tag.outputs.tag }}"
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
