@@ -1,0 +1,44 @@
+version: "3.9"
+
+# docker-compose up
+# Starts:
+#   - mlflow server  → http://localhost:5000  (UI + tracking API)
+#   - grotto-ai      → http://localhost:8000  (completion endpoint)
+
+services:
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.13.0
+    container_name: mlflow-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-data:/mlflow
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+      --host 0.0.0.0
+      --port 5000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  grotto-ai:
+    build: .
+    container_name: grotto-ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    volumes:
+      - ./run_meta.json:/app/run_meta.json:ro  # written by train.py
+    restart: unless-stopped
+
+volumes:
+  mlflow-data:

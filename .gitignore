@@ -1,12 +1,13 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
+# Go Binaries & Builds
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+grotto
+bin/
+dist/
+build/
 
 # Test binary, built with `go test -c`
 *.test
@@ -17,19 +18,60 @@ coverage.*
 *.coverprofile
 profile.cov
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependencies
+
+# vendor/   # uncomment if you use vendoring
 
 # Go workspace file
 go.work
 go.work.sum
 
-# env file
+# Environment & Config
 .env
+.env.*
+*.env
+config.toml
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# Python / MLflow
+**pycache**/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+*venv/
+*/venv/
+*/.venv/
+./mlflow-service/venv
 
-# Built binary
-grotto
+# MLflow artifacts
+mlflow-service/mlruns/
+mlflow-service/artifacts/
+mlflow-service/*.db
+
+# Optional model weights
+*.pth
+*.pt
+
+# Node / NPM
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+*.tar
+*.img
+
+# Testing / Cache
+.cache/
+.tmp/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.iml
+
+# OS Files
+.DS_Store
+Thumbs.db
